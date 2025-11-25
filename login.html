@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MIA Innovation - Acceso</title>
+    <style>
+        /* --- ESTILOS CSS (Igual que antes) --- */
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #0f2038 0%, #050f1e 100%);
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: white;
+        }
+        .logo-container { text-align: center; margin-bottom: 20px; }
+        
+        /* Usa esta clase para tu imagen */
+        .real-logo { width: 120px; margin-bottom: 10px; }
+
+        /* Placeholder por si no tienes la imagen aún */
+        .logo-placeholder {
+            width: 80px; height: 80px; margin: 0 auto 10px;
+            background: rgba(255,255,255,0.1); border-radius: 50%;
+            display:flex; align-items:center; justify-content:center;
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+
+        h1 { font-size: 1.2rem; font-weight: 600; margin: 0; letter-spacing: 1px; }
+        .login-card {
+            background-color: #0f1724; padding: 30px; border-radius: 15px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+            width: 100%; max-width: 380px; border: 1px solid #1e293b;
+        }
+        .login-header { font-size: 1.1rem; font-weight: 700; margin-bottom: 25px; }
+        .label { display: block; font-size: 0.9rem; color: #94a3b8; margin-bottom: 8px; }
+        input {
+            width: 100%; padding: 12px 15px; margin-bottom: 20px;
+            background-color: #162032; border: 1px solid #2d3b55; border-radius: 8px;
+            color: #fff; font-size: 0.95rem; box-sizing: border-box; outline: none;
+            transition: border-color 0.3s;
+        }
+        input:focus { border-color: #38bdf8; }
+        button {
+            width: 100%; padding: 12px; border: none; border-radius: 8px;
+            font-size: 1rem; font-weight: 600; cursor: pointer;
+            background: linear-gradient(90deg, #38bdf8 0%, #818cf8 100%);
+            color: #0f172a; transition: opacity 0.3s;
+        }
+        button:hover { opacity: 0.9; }
+        .footer-text { margin-top: 20px; font-size: 0.75rem; color: #64748b; text-align: center; }
+        .error-msg {
+            color: #ff5555; font-size: 0.85rem; margin-bottom: 15px;
+            display: none; text-align: center;
+        }
+        .copyright {
+            margin-top: 30px; font-size: 0.75rem; color: #475569;
+            display: flex; align-items: center; gap: 8px;
+        }
+        .mini-logo { width: 20px; height: 20px; background: #475569; border-radius: 4px; }
+    </style>
+</head>
+<body>
+
+    <div  class="logo-container">
+    <img src="miaInnovation.jpeg" class="real-logo" alt="Logo MIA">
+    <h1>MIA Innovation</h1>
+</div>
+
+    <div class="login-card">
+        <div class="login-header">accès à l'inventaire / Inventory Access</div>
+        <div id="errorMessage" class="error-msg">Credenciales inválidas</div>
+
+        <form id="loginForm">
+            <label class="label">Usuario</label>
+            <input type="text" id="username" placeholder="admin / usuario" required>
+
+            <label class="label">Contraseña</label>
+            <input type="password" id="password" placeholder="••••••••" required>
+
+            <button type="submit" id="loginBtn">Entrar</button>
+        </form>
+
+        <div class="footer-text">Sistema de gestión interna</div>
+    </div>
+
+    <div class="copyright">
+        <div class="mini-logo"></div> 
+         2025 MIA Innovation — Acceso controlado
+    </div>
+
+    <script>
+        /* --- LÓGICA JAVASCRIPT MODIFICADA --- */
+        document.getElementById('loginForm').addEventListener('submit', function(e) {
+            e.preventDefault(); 
+
+            const user = document.getElementById('username').value.trim();
+            const pass = document.getElementById('password').value;
+            const errorDiv = document.getElementById('errorMessage');
+            const btn = document.getElementById('loginBtn');
+
+            // --- CONFIGURACIÓN DE LINKS ---
+            // 1. Link para el ADMINISTRADOR
+            const linkAdmin = "https://www.google.com"; // <--- CAMBIA ESTO por tu panel de admin
+            
+            // 2. Link para el USUARIO NORMAL
+            const linkUsuario = " https://sites.google.com/view/mia-innovation/home-page-page-principale"; // <--- CAMBIA ESTO por tu panel de usuario
+
+            // --- VALIDACIÓN ---
+            
+            // CASO 1: Es Administrador
+            if (user === "admin" && pass === "admin123") {
+                iniciarSesion(linkAdmin);
+            
+            // CASO 2: Es Usuario
+            } else if (user === "usuario" && pass === "user123") {
+                iniciarSesion(linkUsuario);
+            
+            // CASO 3: Error
+            } else {
+                errorDiv.style.display = 'block';
+                errorDiv.innerText = "Usuario o contraseña incorrectos.";
+                // Sacudida visual (opcional, para que se note el error)
+                btn.style.backgroundColor = "#ff5555";
+                setTimeout(() => { btn.style.background = "linear-gradient(90deg, #38bdf8 0%, #818cf8 100%)" }, 300);
+            }
+
+            // Función auxiliar para hacer la redirección bonita
+            function iniciarSesion(urlDestino) {
+                errorDiv.style.display = 'none';
+                btn.innerText = "Verificando...";
+                btn.style.opacity = "0.7";
+                
+                setTimeout(() => {
+                    window.location.href = urlDestino;
+                }, 800);
+            }
+        });
+    </script>
+
+</body>
+</html>
